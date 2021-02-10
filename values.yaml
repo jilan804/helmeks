@@ -1,9 +1,9 @@
 ## Elasticsearch docker image
 image:
-  repository: elasticsearch
+  repository: 292090429255.dkr.ecr.ap-south-1.amazonaws.com/eks
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
@@ -41,8 +41,8 @@ securityContext:
 ## Default Elasticsearch service ports
 service:
   type: ClusterIP
-  httpPort: 9200
-  transportPort: 9300
+  httpPort: 80
+  transportPort: 80
   ## The node ports (only relevant for type LoadBalancer or NodePort)
   httpNodePort:
   transportNodePort:
@@ -58,9 +58,11 @@ ingress:
 
   ## Additional ingress annotations
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
   ## Hosts
   hosts:
     - host:
